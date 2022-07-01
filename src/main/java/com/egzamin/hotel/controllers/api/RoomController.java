@@ -38,9 +38,10 @@ public class RoomController {
                                            @RequestParam(name = "fridge") boolean fridge){
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         try {
-            return new ResponseEntity<Object>(FindAvailableRoomService.findRoom(repository.findAll(),
-                                                                                beds,
-                                                                                fridge, seaView, airConditioning, formatter.parse(startDate), formatter.parse(endDate)), HttpStatus.OK);
+            Room room = FindAvailableRoomService.findRoom(repository.findAll(),
+                    beds,
+                    fridge, seaView, airConditioning, formatter.parse(startDate), formatter.parse(endDate));
+            return new ResponseEntity<Object>(RoomDto.fromEntity(room), HttpStatus.OK);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

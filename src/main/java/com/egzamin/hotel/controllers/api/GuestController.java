@@ -26,13 +26,15 @@ public class GuestController {
     }
 
     @PostMapping("/guests")
-    public ResponseEntity<Object> add(@RequestBody GuestDto guest){
-        return new ResponseEntity<Object>(repository.save(new Guest(guest.getFirstName(), guest.getLastName(), guest.getEmail(), guest.getPhone())), HttpStatus.CREATED);
+    public ResponseEntity<Object> add(@RequestBody JSONObject guest){
+        Guest saved = new Guest(guest.getAsString("firstName"), guest.getAsString("lastName"), guest.getAsString("email"), guest.getAsString("phone"));
+        return new ResponseEntity<Object>(repository.save(saved), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/guests")
     public ResponseEntity<Object> delete(@RequestParam long id){
         repository.deleteById(id);
+        repository.flush();
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }

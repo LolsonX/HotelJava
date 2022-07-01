@@ -4,6 +4,8 @@ import com.egzamin.hotel.domain.Room;
 import com.egzamin.hotel.dto.RoomDto;
 import com.egzamin.hotel.repository.RoomRepository;
 import com.egzamin.hotel.service.FindAvailableRoomService;
+import net.minidev.json.JSONObject;
+import netscape.javascript.JSObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,8 +47,11 @@ public class RoomController {
     }
 
     @PostMapping("/rooms")
-    public ResponseEntity<Object> add(@RequestBody RoomDto room) {
-        Room saved = repository.save(new Room(room.isAirConditioning(), room.isSeaView(), room.isFridge(), room.getPrice(), (short) room.getBeds()));
+    public ResponseEntity<Object> add(@RequestBody JSONObject room) {
+        Room newRoom = new Room((boolean) room.get("airConditioning"), (boolean) room.get("seaView"), (boolean) room.get("fridge"), Float.parseFloat(room.getAsString("price")), room.getAsNumber("beds").shortValue());
+
+        newRoom.setId((int) room.get("id"));
+        Room saved = repository.save(newRoom);
         return new ResponseEntity<Object>(saved, HttpStatus.CREATED);
     }
 

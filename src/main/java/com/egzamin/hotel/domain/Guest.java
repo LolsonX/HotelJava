@@ -5,7 +5,7 @@ import java.util.Set;
 
 @Entity
 public class Guest {
-    private @Id long id;
+    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;
     private String firstName;
     private String lastName;
 

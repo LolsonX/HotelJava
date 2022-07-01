@@ -19,9 +19,9 @@ public class GuestController {
         this.repository = repository;
     }
 
-    @GetMapping("/rooms")
+    @GetMapping("/guests")
     public ResponseEntity<Object> index(){
-        List<Guest> rooms = repository.findAll();
-        return new ResponseEntity<Object>(rooms, HttpStatus.OK);
+        List<Guest> guests = repository.findAll();
+        return new ResponseEntity<Object>(guests, HttpStatus.OK);
     }
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 public class Reservation {
-    private @Id @GeneratedValue(strategy = GenerationType.AUTO) long id;
+    private @Id long id;
 
     @ManyToOne @JoinColumn(name="GUEST_ID", nullable = false) private Guest guest;
     @ManyToOne @JoinColumn(name="ROOM_ID", nullable = false) private Room room;

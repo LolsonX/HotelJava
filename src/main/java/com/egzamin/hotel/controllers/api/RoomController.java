@@ -6,15 +6,10 @@ import com.egzamin.hotel.repository.RoomRepository;
 import com.egzamin.hotel.service.FindAvailableRoomService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,5 +42,17 @@ public class RoomController {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @PostMapping("/rooms")
+    public ResponseEntity<Object> add(@RequestBody RoomDto room) {
+        Room saved = repository.save(new Room(room.isAirConditioning(), room.isSeaView(), room.isFridge(), room.getPrice(), (short) room.getBeds()));
+        return new ResponseEntity<Object>(saved, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/rooms")
+    public ResponseEntity<Object> delete(@RequestParam int id){
+        repository.deleteById(id);
+        return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }

@@ -8,6 +8,10 @@ public class GuestDto {
     private String firstName;
     @JsonProperty("lastName")
     private String lastName;
+    @JsonProperty("phone")
+    private String phone;
+    @JsonProperty("email")
+    private String email;
 
     public GuestDto() {}
 
@@ -15,6 +19,8 @@ public class GuestDto {
         GuestDto dto = new GuestDto();
         dto.setFirstName(guest.getFirstName());
         dto.setLastName(guest.getLastName());
+        dto.setEmail(guest.getEmail());
+        dto.setPhone(guest.getPhone());
         return dto;
     }
 
@@ -34,4 +40,19 @@ public class GuestDto {
         this.lastName = firstName;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

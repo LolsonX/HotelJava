@@ -1,12 +1,12 @@
 package com.egzamin.hotel.controllers.api;
 
+import com.egzamin.hotel.domain.Guest;
 import com.egzamin.hotel.dto.GuestDto;
 import com.egzamin.hotel.repository.GuestRepository;
+import net.minidev.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +23,16 @@ public class GuestController {
     public ResponseEntity<Object> index(){
         List<GuestDto> guests = repository.findAll().stream().map(GuestDto::fromEntity).toList();
         return new ResponseEntity<Object>(guests, HttpStatus.OK);
+    }
+
+    @PostMapping("/guests")
+    public ResponseEntity<Object> add(@RequestBody GuestDto guest){
+        return new ResponseEntity<Object>(repository.save(new Guest(guest.getFirstName(), guest.getLastName(), guest.getEmail(), guest.getPhone())), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/guests")
+    public ResponseEntity<Object> delete(@RequestParam long id){
+        repository.deleteById(id);
+        return new ResponseEntity<Object>(HttpStatus.OK);
     }
 }

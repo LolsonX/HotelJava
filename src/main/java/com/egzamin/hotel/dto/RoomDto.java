@@ -14,6 +14,8 @@ public class RoomDto {
     private boolean seaView;
     @JsonProperty("airConditioning")
     private boolean airConditioning;
+    @JsonProperty("price")
+    private float price;
     public RoomDto(){}
 
     public static RoomDto fromEntity(Room room){
@@ -23,6 +25,7 @@ public class RoomDto {
         dto.setBeds(room.getBeds());
         dto.setFridge(dto.isFridge());
         dto.setSeaView(room.isSeaView());
+        dto.setPrice(room.getPrice());
         return dto;
     }
 
@@ -64,5 +67,13 @@ public class RoomDto {
 
     public void setAirConditioning(boolean airConditioning) {
         this.airConditioning = airConditioning;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 }

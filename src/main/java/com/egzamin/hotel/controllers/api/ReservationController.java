@@ -57,4 +57,9 @@ public class ReservationController {
         }
 
     }
+    @DeleteMapping("/reservations")
+    public ResponseEntity<Object> delete(@RequestParam long id){
+        repository.deleteById(id);
+        return new ResponseEntity<Object>(HttpStatus.OK);
+    }
 }

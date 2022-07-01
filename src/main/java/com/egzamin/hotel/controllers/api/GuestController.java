@@ -1,6 +1,6 @@
 package com.egzamin.hotel.controllers.api;
 
-import com.egzamin.hotel.domain.Guest;
+import com.egzamin.hotel.dto.GuestDto;
 import com.egzamin.hotel.repository.GuestRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class GuestController {
 
     @GetMapping("/guests")
     public ResponseEntity<Object> index(){
-        List<Guest> guests = repository.findAll();
+        List<GuestDto> guests = repository.findAll().stream().map(GuestDto::fromEntity).toList();
         return new ResponseEntity<Object>(guests, HttpStatus.OK);
     }
 }

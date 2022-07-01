@@ -3,6 +3,7 @@ package com.egzamin.hotel.controllers.api;
 import com.egzamin.hotel.domain.Guest;
 import com.egzamin.hotel.domain.Reservation;
 import com.egzamin.hotel.domain.Room;
+import com.egzamin.hotel.dto.ReservationDto;
 import com.egzamin.hotel.repository.GuestRepository;
 import com.egzamin.hotel.repository.ReservationRepository;
 import com.egzamin.hotel.repository.RoomRepository;
@@ -33,7 +34,7 @@ public class ReservationController {
 
     @GetMapping("/reservations")
     public ResponseEntity<Object> index(){
-        List<Reservation> reservations = repository.findAll();
+        List<ReservationDto> reservations = repository.findAll().stream().map(ReservationDto::fromEntity).toList();
         return new ResponseEntity<Object>(reservations, HttpStatus.OK);
     }
 
@@ -48,9 +49,9 @@ public class ReservationController {
             Reservation reservation = new Reservation(guest, room, startDate , endDate);
             if(FindAvailableRoomService.availableInThisTime(room, startDate, endDate)){
                 repository.save(reservation);
-                return new ResponseEntity<Object>(reservation, HttpStatus.CREATED);
+                return new ResponseEntity<Object>(ReservationDto.fromEntity(reservation), HttpStatus.CREATED);
             }
-            return new ResponseEntity<Object>(reservation, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Object>(ReservationDto.fromEntity(reservation), HttpStatus.BAD_REQUEST);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,7 @@
 package com.egzamin.hotel.controllers.api;
 
 import com.egzamin.hotel.domain.Room;
+import com.egzamin.hotel.dto.RoomDto;
 import com.egzamin.hotel.repository.RoomRepository;
 import com.egzamin.hotel.service.FindAvailableRoomService;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class RoomController {
     }
     @GetMapping("/rooms")
     public ResponseEntity<Object> index(){
-        List<Room> guests = repository.findAll();
+        List<RoomDto> guests = repository.findAll().stream().map(RoomDto::fromEntity).toList();
         return new ResponseEntity<Object>(guests,HttpStatus.OK);
     }
 

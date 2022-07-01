@@ -17,8 +17,10 @@ public class FindAvailableRoomService {
     }
 
     public static boolean availableInThisTime(Room room, Date startDate, Date endDate){
-        return room.getReservations().stream().noneMatch(reservation -> startDate.before(reservation.getEndDate()) &&
-                                                                        startDate.after(reservation.getStartDate()) ||
-                                                                        endDate.before(reservation.getEndDate()) && endDate.after(reservation.getStartDate()));
+        return room.getReservations().stream().noneMatch(reservation -> (
+                (startDate.before(reservation.getEndDate()) || startDate.equals(reservation.getEndDate()))) &&
+                (startDate.after(reservation.getStartDate()) || startDate.equals(reservation.getStartDate())) &&
+                (endDate.before(reservation.getEndDate())|| endDate.equals(reservation.getEndDate())) &&
+                (endDate.after(reservation.getStartDate()) || endDate.equals(reservation.getStartDate())));
     }
 }

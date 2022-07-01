@@ -84,4 +84,9 @@ public class Room {
     public void setReservations(Set<Reservation> reservations) {
         this.reservations = reservations;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Room[id=%d]", id);
+    }
 }

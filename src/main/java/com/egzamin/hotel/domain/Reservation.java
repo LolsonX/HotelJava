@@ -62,4 +62,9 @@ public class Reservation {
         this.endDate = endDate;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Reservation[id=%d, startDate='%s', endDate='%s']", id, startDate, endDate);
+    }
+
 }
